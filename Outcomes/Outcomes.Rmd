@@ -1,0 +1,25 @@
+---
+title: "Outcomes by Outcome Project"
+author: "Jose A. Bartolomei, PhD"
+date: "Feb/19/2015"
+output: html_document
+---
+
+### Outcomes
+It is well known that information drive correct decisions indispensable for the development of a Nation. Nevertheless, in some Countries health, economic and other outcomes are not up to date or non-existence.  Much of those that are available does not include minimum statistical requirements such as 95% confidence intervals and hypothesis tests needed for correct data interpretation.  
+
+Outcome Project was born of the interest of help solving this long standing problem.  We want to prove that is possible and can be done cost-effectively.  Our aim has been to create or use innovative tools were people do not hassle in finding important updated outcomes for the development of a Country.
+
+To add value we are developing Outcomes at http://www.outcomeproject.com/outcomes/ bringing to you updated health prevalences for Puerto Rico using the Behavioral Risk Factor Surveillance Survey. The Outcome platform will be in continuous development and will include other events.  Also, Outcome Project will be writing blogs for the reader to understand the presented analysis.
+
+### Outcome Reports
+
+- Every outcome presented within this platform has been and will be calculated by us using raw data and with rigorous statistical procedures. You can obtain a full report of this and **other** outcomes via:
+
+	- Sponsoring an Outcome Report: http://www.outcomeproject.com/sponsors-page/
+
+### **Your Outcomes**
+Organizations are challenged to reduce costs, improve performance and provide better quality of life. Outcome surveillance allows institutions to derives insight from data. This is where Outcome Project partners with institutions through applying analytical disciplines to drive evidence based decision for planning, management and learning.
+
+### Contact us!
+#### info@outcomeproject.com

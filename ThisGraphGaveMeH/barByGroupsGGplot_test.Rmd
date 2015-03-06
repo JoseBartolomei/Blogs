@@ -1,0 +1,105 @@
+
+---
+title: This Graph gave me HEADACHE (Bar chart by variables and categories)
+author: "José A. Bartolomei-Díaz"
+date: "05/16/2014"
+output: html_document
+---
+
+It has been a long time since I posted a blog. As I said to a colleague not because I did not had topic but because doing a post is an overload to and overloaded working life. Nevertheless, I did an effort and here goes this one.
+
+Data analysis is about using the right methods to achieve the planed objectives. Then, disseminating the analyzed information to the population requires the skills to turn numbers to a story via a sequences of visualizations and graphics.
+
+I least this is the way I see it.
+
+In data analysis is common to use histograms to present the distribution of a continuous variable, bar charts to observe differences among groups categories and line charts to observe time trends.
+Nonetheless, to accomplish the dissemination strategies in an efficient manner you need the right tools.  For this I use the [R environment for statistical computing and praphics][r.1]. Many of my reasons to use this statistical environment can be found in posts like [this one][1] from analyticstrainings.com and [this one][2] from inside-R.
+
+After using EpiInfo, GLIM, SAS, SPSS, DMX and S-Plus for data analysis I have been stick to **R** for many years. Beyond data analysis, **R** has allowed me to create complex and dynamic systems for disease surveillance. Based on my experiences this is a marvelous statistical environment and an extraordinary graphics software.  Although, I recognize the graphics capability of **R**, doing them has been complicated until the arrival of [ggplot2][3].
+
+ggplot 2 is an **R** packages develop by **R** guru [Hadley Wickham][4] whose main purpose was to create in **R** an implementation of the Grammar of Graphics written by [Leland Wilkinson][5].
+
+Despite of the advancement of ggplot2 to **R** sometimes things can get complicated. This time I wanted to visualize the categories of various variables but in one graphic. Nevertheless, happens that this graph gave me a lot of headache and to avoid this malady to you I will show you how to do it.
+
+[r.1]:http://www.r-project.org/
+[1]:http://analyticstrainings.com/?p=101
+[2]:http://www.inside-r.org/why-use-r
+[3]:http://ggplot2.org/
+[4]:http://had.co.nz/
+[5]:http://en.wikipedia.org/wiki/Leland_Wilkinson
+
+## Create your data
+First, put the data in the adequate shape. I will create a dummy data.frame named df that contains a simulated information. Is important to note the arrangement of the data where the var column is the group of categories.  The cat column has the categories of interest and the vals column has the value of each category. The vals column represent, in this case , percentages. Sound complicated, but, just see bellow.
+
+```{r data}
+df <- data.frame(
+  var = c(rep("gender", 2), rep("age", 3), rep("income", 4)),
+  cat = c("Female", "Male", "1-24", "25-54", "55+",
+                    "Lo", "Lo-Med", "Med", "High"),
+  vals = c(60, 40, 50, 30, 20, 10, 25, 25, 40)
+)
+
+df
+```
+
+## Manage data
+This step is where I obtained my first headache.  Because in **R** a factor is displayed by alphabetical order the graph appears correctly but the legend information not.
+Although, I tried functions like order(), levels() and re-levels() the information never display correctly.
+
+Then, I remember that from time to time I needed to first turn the text information to character followed by factor them again with the respective desire levels.  This did the trick as shown bellow:
+
+```{r manageData}
+
+df$var <-factor(as.character(df$var),
+                  levels = c("gender", "age", "income"))
+
+df$cat <- factor(as.character(df$cat),
+                       levels = c("Female", "Male", "1-24", "25-54", "55+",
+                    "Lo", "Lo-Med", "Med", "High"))
+
+```
+## Then load the packages ggplo2
+```{r library}
+library(ggplot2)
+
+```
+## Finally perform the graph
+Perform the graphic was easy until the decision was made to include the legend information bellow the bars.  Here I spend hours searching the internet for an adequate example and solution. Finally, when I was to gave up I found [this post][solu1] with complex solutions that in reality did not make senses to me. Not because there where incorrect but because where too complex and I knew that ggplot2 was designed to minimize programming complexities.
+
+But at the end of the post was what I was looking for:
+
+ **geom_text(aes(label=y), vjust=0)**
+ 
+ Simple and elegant.  The argument y of the geom_text function.  I knew that I was using the correct function but in an inadequately manner.
+ 
+ Bellow I present you the desire graph.
+ 
+### Sometimes find the right argument of the right function in R is like trying to find a needle in a haystack.
+ 
+ [solu1]:http://stackoverflow.com/questions/6455088/how-to-put-labels-over-geom-bar-in-r-with-ggplot2
+
+
+
+```{r p.1, fig.align='default', fig.width=10, fig.path="/media/truecrypt2/Blog/ThisGraphGaveMeH/barByGroupsGGplot/", warning=FALSE, message=FALSE}
+p.1 <-
+  ggplot(data = df, aes(x = var, y = vals,
+                                 fill = cat)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_text(aes(label = paste(df$vals, "%")),
+                position = position_dodge(width = 0.9), 
+                vjust = -0.5, hjust = 0.5, size = 5) +
+  geom_text(colour="darkgray", aes(y = -2, label=cat),  
+             position=position_dodge(width=0.9), col=gray, size = 4) +
+  labs(title = "This Graph Gave Me Headache", x = "group",
+       y = "Percent (%)") +
+  theme(legend.position = "none", 
+    panel.background=element_blank(),
+    axis.line = element_line(colour = "black"),
+    axis.line.x = element_line(colour = "black"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank()) 
+p.1
+
+```

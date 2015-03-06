@@ -1,0 +1,148 @@
+Speed Test: Data.table Vs. Data.Frame
+========================================================
+
+
+Learn and train to be efficiency in any disipline is a skill to develop which can be acomplish in many ways.  Because surveillance is to constantly monitor health information from a diverse data set in a constant manner process speed is important.
+
+Many years ago I tried and some how managed to analyze millions of rows from health insurance data sets.  By that time I had S-plus and Excel as tools in a laptop with 512 MB of RAM.  The task was such a hassle that at some point a get depressed.  About two years ago I was dealing with simillar data sets.  For the task I needed to managed, reshape and merge, among other one data.frame of 6 million rows 23 columns with other of about two millons rows and seven columns.  I had an HP work station 4 processor 4 GB of RAM.  The task, with many tricks was doable. Nevetheless, I requested other 16 GB of RAM. :)
+
+During the past month, with the programming and R skill that I have aquired throughout the years, I was redefining some management and analysis scripts with the mentioned data sets. Certainly, I was not happy with how the programm perform. Furthermore I started to search and read about performance in R.  Something that I usually do from time to time (I am a huge fan of performance).
+
+Among many new stuff that brilliant **R** developers are doing I decided to implement in my work the [data.table][1.dt] package. The purpose of the developers in doing this package is to extend a data.frame capabilities for fast indexing, fast ordered joins, fast assignment, fast grouping and list columns.
+
+One of the dificulties of using data.table is that it change the paradigm of how manage the data set and how to write programs in **R**. Furthermore, time needs to be invested in order to efficiently use this package.
+
+Bellow is a series of procedures that I have implemented in my script. Those will show you how I used data.table and how the performance improved when compare with traditional data.frame procedures.
+
+
+[1.dt]: http://cran.r-project.org/web/packages/data.table/index.html
+
+
+First, load require libraries
+```{r libraries, message=FALSE, warning=FALSE}
+library(data.table)
+library(bit64)
+```
+
+To test the speed of the functions I will use system.time() which results are represented in seconds.
+## 1
+The first test was loading a data.frame using the traditional and useful read.csv vs. the new data.table fread(). As you will notice bellow the 
+```{r loadingCsvData, message=FALSE, warning=FALSE}
+
+# data.frame loading .csv data
+system.time(
+DF <-  read.csv(
+  "/media/truecrypt2/ORP2/HIC/ASES/Data/Raw/Claims/reclamaciones_asma_diabetes.csv", 
+  header = TRUE, sep = ",")
+  )
+
+
+# data.table loading .csv data
+system.time(
+DT <-  fread(
+    "/media/truecrypt2/ORP2/HIC/ASES/Data/Raw/Claims/reclamaciones_asma_diabetes.csv")
+  )
+
+
+
+```{r SetNames}
+# data.frame
+system.time(
+  colnames(DF) <- tolower(names(DF))
+  )
+# data.table
+system.time(
+setnames(DT, tolower(names(DT)))
+  )
+```
+
+```{r Colum Selectio}
+# data.frame
+system.time(
+  DF[, 
+     c("att_spec", "mpi", "claim_id", "pcp_prov", "icd9_diag_01",
+               "risk_type", "primary_carrier_id", "bill_type", "enc_type",
+               "proc_code", "rev_code", "municipality", "municipality2", 
+               "gender", "dob", "region", "adm_date", "dis_date", "from_date",
+               "to_date", "entry_date", "entry_date_key", "date_accident"),]
+  )
+
+
+# data.table
+system.time(
+  DT[, 
+             c("att_spec", "mpi", "claim_id", "pcp_prov", "icd9_diag_01",
+               "risk_type", "primary_carrier_id", "bill_type", "enc_type",
+               "proc_code", "rev_code", "municipality", "municipality2", 
+               "gender", "dob", "region", "adm_date", "dis_date", "from_date",
+               "to_date", "entry_date", "entry_date_key", "date_accident"),
+with = FALSE]
+)
+
+```
+```{r Creating Date Colum}
+# data.frame
+system.time(
+  DF$adm_year <- as.Date(DF$adm_date, "%m/%d/%y")
+  )
+
+# data.table
+system.time(
+  DT[, adm_year := as.IDate(DT$adm_date, "%m/%d/%Y")]
+  )
+```
+
+```{r Perform a function}
+system.time(
+table(DF$adm_year)
+)
+
+
+system.time(
+  DT[, table(adm_year)]
+  )
+
+```
+```{r}
+# data.frame
+system.time(
+  DF[DF$adm_year == 2010,]
+  )
+
+setkey(DT, adm_year)
+system.time(
+DT[J(2010)]
+)
+```
+
+
+```{r Perform_function2}
+system.time(
+table(DF$adm_year)
+)
+
+
+system.time(
+  DT[, table(adm_year)]
+  )
+
+```
+```{r}
+setkey(DT, adm_year)
+system.time(
+DT[adm_year %in% c(2008, 2009, 2010)]
+)
+```
+
+```{r substr()}
+system.time(
+DF$att_spec2 <- substr(DF$att_spec, 1, 3)
+)
+
+# data.table
+system.time(
+DT[, att_spec2 := substr(DT$att_spec, 1, 3)]
+)
+```
+
+
