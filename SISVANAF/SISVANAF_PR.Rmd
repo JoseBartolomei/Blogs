@@ -1,0 +1,58 @@
+---
+title: "Food, Nutrition and Physical Activity Surveillance System in Puerto Rico (SIVANAF-PR)"
+author: "José A. Bartolomei-Díaz"
+date: "06/20/2014"
+output: html_document
+---
+
+# Introduction
+
+On January 8, 1999 the Senate of Puerto Rico and the House of Representatives of the Commonwealth of Puerto Rico approved the Organic Law num. 10 that established the Puerto Rico Food and Nutrition Commission (CANPR by its Spanish acronym). The main objective of the law was to establish an agenda to address one of the century's biggest threats to society in Puerto Rico, the prevalence of diseases related to inadequate alimentary habits, poor nutritious food selection, and access and availability of nutritious food. To deal with this public health threat, Law num. 10 mandates that CANPR accomplish two main goals:
+
+
+1. Coordinate the adequate use of available economic and human resources in collaboration with diverse private and governmental agencies.
+
+2. Improve the nutritional and health status of the population in Puerto Rico to enhance their overall well-being.
+
+
+To work toward the stated goals, Article num. 6 of Law num. 10 appoints CANPR the responsibility to establish a surveillance system with the purpose to: 
+
+* Identify health conditions related to inadequate alimentary, nutritional and physical activity habits.
+*  Advise in the identification of access and availability of foods with high nutritional value to improve the nutritional state of the population in Puerto Rico.
+
+
+Consequently, efforts were made to implement a Food, Nutrition and Physical Activity Surveillance System in Puerto Rico (SIVANAF-PR by its Spanish acronym). Nevertheless, it was not until the year 2011 that the CANPR obtained funds to commence the design of the mandated surveillance system. To this extend **Outcome Project** collaborated with CANPR to develop the SISVANAF-PR strategic guide. This document provides a working scheme for the development, implementation and sustainability of the SISVANAF-PR. Every section incorporates **Outcome Project's** insight in developing surveillance systems, guidance from the Centers for Diseases Control and Prevention surveillance evaluation documentation, and literature review of scientific documents related to epidemiological surveillance, biostatistics, computational statistics, informatics, food security, health related effects, and alimentary and physical activity habits.
+
+# SISVANAF-PR Mission & Goals
+Based on the results of this work the mission and goals of the SISVANAF-PR where established as follow:
+
+## Mission
+The mission of the Food, Nutrition and Physical Activity Surveillance System of Puerto Rico (SISVANAF-PR) is to systematically and continuously collect, analyze, interpret and disseminate data related to dietary and physical activity habits, the availability of nutritious food, and the development of nutrition and physical activities health related diseases in Puerto Rico. 
+
+## Goals
+The following are the goals of the SISVANAF-PR.
+
+* Estimate the magnitude and risk of dietary habits in Puerto Rico to recommend strategies designed to guide diets in Puerto Rico.
+
+* Estimate the availability and access of nutritious food in Puerto Rico to guide the development of strategies to secure its readiness.
+
+* Estimate the magnitude of food security access indicators.  
+
+* Estimate the magnitude and risk of diseases related to inadequate dietary and physical activity habits in Puerto Rico to recommend strategies for primary, secondary and tertiary health prevention.
+
+* Document the distribution of the surveyed indicators within the scope of time, place and subject.
+
+* Evaluate current strategies and public policy with the surveillance information and recommend new policy and strategies accordingly.
+
+* Detect changes in the population's dietary habits, nutritious food availability and related diseases in order to guide population intervention and public policy strategies.
+
+* Identify research needs related to dietary and physical activity habits, availability and access of nutritious food and health related diseases.
+
+# Outcomes
+
+The most extensive part of this work was to identify standard data sources for Puerto Rico that continuously collect SISVANAF-PR related outcomes.
+
+Following I present the SISVANAF-PR mind map which give a perspective of the outcomes this system intent to survey.
+
+![alt text](/media/truecrypt2/ORP2/SISVANAF_PR/Mind_Map/SISVANAF_png.png)
+

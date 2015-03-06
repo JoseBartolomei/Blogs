@@ -1,0 +1,79 @@
+---
+title: Loading multiple data sets efficiently into R
+author: "José A. Bartolomei-Díaz"
+date: "05/16/2014"
+output: html_document
+---
+
+Few days ago we received nine retrospective .csv data sets with almost 200 variables. Each data set represent a specific year. The first thought I had was which will be an efficient way to load and verify columns position and name for further data management, analysis and reporting.
+
+After some readings and trials. This was, I think, an efficient solution.
+
+1. First use the list.files function to produce a character vector of the names of files or directories in the named directory.
+
+```{r, echo=FALSE}
+# Create a list a name by a pattern -------------------------------------------------
+
+csv_files <-
+	list.files(path = "/media/truecrypt2/ORP2/JL/Data/Raw/csv/Basic",
+						 	pattern = '.csv',
+					 full.names = TRUE)
+
+```
+
+```{r, echo=TRUE, results='hide'}
+	list.files(path = "/media/",
+						 	pattern = '.csv',
+					 full.names = TRUE)
+
+```
+
+```{r sub, echo=FALSE}
+csv_filess <-
+paste(substr(csv_files, 1, 7),
+substr(csv_files, 46, 47),
+".csv", sep = "")
+csv_filess
+```
+
+
+2. load R libraries to be used.
+	* plyr a set of clean and consistent tools that implement the split-apply-combine pattern in R. .
+```{r, message=FALSE, warning=FALSE}
+library(plyr)
+```
+
+3. Load all the .csv data iteratively into R. The read.csv function was used to load the data sets but nested within the llply function to apply the read.csv function for each element of the csv_file list and keep the results as a list.
+```{r}
+x.df <- llply(csv_files, function(x)
+		read.csv(x, header = TRUE, sep = ",")[, c(1:12)])
+```
+
+The result of this procedure is a list of nine elements. Every element is one of the received data sets. As you can see, with one line of code is possible to load multiple data sets in to R. In this demostration only 12 collums were loaded.
+```{r}
+llply(x.df, dim)
+```
+
+4. Check if every column has the same name and position. I did this in two ways.
+
+	a. Ask the computer if all the columns name are equal.
+```{r}
+ldply(x.df, function(x) table(names(x) == names(x)))
+```
+
+	b. Visually check the columns name.
+```{r}
+ ldply(x.df, function(x) names(x))
+```
+
+5. Luckily, they were identically so I make of them a single data.frame using the ldply function.
+```{r}
+x.df <- ldply(csv_files, function(x) 
+	read.csv(x, header = TRUE, sep = ",")[, c(1:12)])
+
+dim(x.df)
+
+```
+
+### Next, data analysis. ;)
+
